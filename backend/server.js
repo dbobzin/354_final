@@ -24,19 +24,17 @@ app.use("/api/user", userRoutes);
 
 //to connect to cyclic
 app.use(express.static(path.join(__dirname + "/public")));
-//routes
-const fs = require("node:fs");
-const public_html = path.join(__dirname + "/public");
-app.get("*", (req, res) => {
-  res.sendFile(path.join(public_html, "index.html"));
-});
+
 // connect to db
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     // listen for requests
     app.listen(process.env.PORT, () => {
-      console.log("connected to db & listening on port", process.env.PORT);
+      console.log(
+        "connected to db & listening on port",
+        process.env.PORT || 5000
+      );
     });
   })
   .catch((error) => {
